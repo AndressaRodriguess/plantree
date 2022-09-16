@@ -1,0 +1,545 @@
+openapi: 3.0.0
+servers:
+  - description: API Docs for PlanTree application
+    url: https://virtserver.swaggerhub.com/ANDRESSAR/PlanTree/1.0.0
+info:
+  description: API
+  version: "1.0.0"
+  title: API PlanTree
+  contact:
+    email: andressa.r@aluno.ifsp.edu.br
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+tags:
+  - name: trees
+    description: All trees related endpoints
+  - name: trees_planted
+    description: All endpoints related to planted trees
+  - name: plantation_locations
+    description: All endpoints related to plantation locations
+  - name: users
+    description: All endpoints related to users
+paths:
+  /trees:
+    get:
+      tags:
+        - trees
+      summary: Busca todas as árvores
+      operationId: searchtrees
+      description: Lista as árvores cadastradas
+      responses:
+        '200':
+          description: Retorna lista de árvores
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Tree'
+        '400':
+          description: bad input parameter
+    post:
+      tags:
+        - trees
+      summary: Cadastra árvore
+      operationId: createTree
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Tree'
+      responses: 
+        '201':
+          description: Árvore cadastrada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tree'
+        '400':
+          description: invalid input object
+  /trees/{id}:
+    get:
+      tags:
+        - trees
+      summary: Busca árvore pelo id informado
+      operationId: searchonetree
+      description: Busca árvore pelo id informado
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID
+          schema:
+            type : integer
+            format: int64
+            minimum: 1
+      responses:
+        '200':
+          description: Retorna dados da árvore
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tree'
+        '400':
+          description: bad input parameter
+        '404':
+          description: not found
+    put:
+      tags:
+        - trees
+      summary: Atualiza árvore
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID
+          schema:
+            type : integer
+            format: int64
+            minimum: 1
+      operationId: updateTree
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Tree'
+      responses: 
+        '200':
+          description: Árvore atualizada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tree'
+        '400':
+          description: invalid input object
+        '404':
+          description: not found
+    delete:
+      tags:
+        - trees
+      summary: Deleta árvore do ID informado
+      operationId: deleteTree
+      description: Deleta dados de árvore
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Árvore deletada
+        '404':
+          description: not found
+          
+  /trees_planted:
+    get:
+      tags:
+        - trees_planted
+      summary: Busca todas as árvores plantadas do usuário
+      description: Lista as árvores plantadas do usuário logado
+      responses:
+        '200':
+          description: Lista de árvores plantadas pelo usuário
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TreePlanted'
+        '400':
+          description: bad input parameter
+    post:
+      tags:
+        - trees_planted
+      summary: Cadastra árvore plantada
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TreePlanted'
+      responses: 
+        '201':
+          description: Cadastro de árvore plantada realizado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TreePlanted'
+        '400':
+          description: invalid input object
+  /trees_planted/{id}:
+    get:
+      tags:
+        - trees_planted
+      summary: Busca dados da árvore plantada pelo id informado
+      description: Busca dados da árvore plantada pelo id informado
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID
+          schema:
+            type : integer
+            format: int64
+            minimum: 1
+      responses:
+        '200':
+          description: Retorna dados da árvore plantada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TreePlanted'
+        '400':
+          description: bad input parameter
+        '404':
+          description: not found
+    put:
+      tags:
+        - trees_planted
+      summary: Atualiza registro de árvore plantada
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID
+          schema:
+            type : integer
+            format: int64
+            minimum: 1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TreePlanted'
+      responses: 
+        '200':
+          description: 'Success'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TreePlanted'
+        '400':
+          description: 'invalid input object'
+        '404':
+          description: 'not found'
+    delete:
+      tags:
+        - trees_planted
+      summary: Deleta árvore plantada com ID informado
+      description: Deleta dados de árvore plantada
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Árvore plantada deletada
+        '404':
+          description: not found
+          
+  /plantation_locations:
+    get:
+      tags:
+        - plantation_locations
+      summary: Busca locais de plantação do usuário logado
+      description: Lista locais de plantação do usuário
+      responses:
+        '200':
+          description: Retorna lista de locais de plantação do usuário
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PlantationLocal'
+        '400':
+          description: bad input parameter
+    post:
+      tags:
+        - plantation_locations
+      summary: Cadastra locais de plantação
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlantationLocal'
+        description: Local de plantação
+      responses: 
+        '201':
+          description: Cadastro de local de plantação realizado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlantationLocal'
+        '400':
+          description: invalid input object
+  /plantation_locations/{id}:
+    delete:
+      tags:
+        - plantation_locations
+      summary: Deleta árvore local de plantação com ID informado
+      description: Deleta dados de local de plantação
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Local de plantação deletado
+        '404':
+          description: not found
+          
+  /users:
+    get:
+      summary: Busca todos os usuários
+      tags:
+        - users
+      description: |
+        Retorna a listagem de todos os usuários registrados caso o usuário logado for administrador, caso não retorna dados do seu usuário
+      responses:
+        '200':
+          description: Retorno lista de usuários
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+    post:
+      summary: Cadadastra usuário ao sistema
+      tags:
+        - users
+      description: Cadastrar usuário
+      responses:
+        '201':
+          description: Usuário cadastrado
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        '400':
+          description: 'invalid input, object invalid'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+        description: Usuário
+  /users/{user_id}:
+    get:
+      summary: Busca o usuário do ID informado
+      tags:
+        - users
+      description: Busca usuário
+      parameters: 
+        - in: path
+          name: user_id
+          description: User ID
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Retorna usuário
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        '404':
+          description: Usuário não encontrado
+    delete:
+      summary: Remove o usuário do ID informado
+      tags:
+        - users
+      description: Deleta o usuário
+      parameters: 
+        - in: path
+          name: user_id
+          description: User ID
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Usuário excluído com sucesso
+          content:
+            application/text:
+              example: Usuário excluído com sucesso
+        '404':
+          description: Usuário não encontrado
+    put:
+      summary: Atualiza o usuário do ID informado
+      tags:
+        - users
+      description: Atualiza o usuário
+      parameters: 
+        - in: path
+          name: user_id
+          description: User ID
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Usuário atualizado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: invalid input, object invalid
+        '404':
+          description: Usuário não encontrado
+
+components:
+  schemas:
+    Tree:
+      type: object
+      required:
+        - id
+        - name
+        - family
+        - scientific_name
+        - origin
+        - division
+        - class
+        - genus
+        - specie
+        - group
+        - description
+      properties:
+        id:
+          type: number
+          format: uuid
+          example: 1
+        name:
+          type: string
+          example: Abacateiro
+        family:
+          type: string
+          example: Lauraceae
+        scientific_name:
+          type: string
+          example: Persea americana
+        origin:
+          type: string
+          example: americana
+        division:
+          type: string
+          example: Magnoliophyta
+        class:
+          type: string
+          example: Magnoliopsida
+        genus:
+          type: string
+          example: Persea
+        specie:
+          type: string
+          example: P. americana
+        group:
+          type: string
+          example: Angiospermas
+        description:
+          type: string
+          example: 'O abacateiro cresce mais facilmente em solos leves, profundos, drenados e ligeiramente ácidos. As melhores condições climáticas são encontradas em regiões com chuvas em torno de 1200 milímetros anuais. São conhecidas mais de 500 variedades, de três origens diferentes: a guatemalteca, a antilhana e a mexicana. A parte comestível é a polpa verde-amarelada, de consistência mole, que envolve a grande semente.'
+          
+    PlantationLocal:
+      type: object
+      required:
+        - id
+        - name
+        - user_id
+      properties:
+        id:
+          type: number
+          format: uuid
+          example: 1
+        name:
+          type: string
+          example: Pomar da minha casa
+          
+        user_id:
+          type: number
+          format: uuid
+          example: 1
+    
+    User:
+      type: object
+      required:
+        - id
+        - name
+        - email
+        - password
+        - isAdmin
+        - createdAt
+      properties:
+        id:
+          type: number
+          format: uuid
+          example: 1
+        name:
+          type: string
+          example: Andressa
+        email:
+          type: string
+          example: example@example.com
+        password:
+          type: string
+          example: qweasd
+        createdAt:
+          type: string
+          format: date-time
+          example: '2022-09-07T01:12:25.001Z'
+        updatedAt:
+          type: string
+          format: date-time
+          example: '2022-09-07T01:12:25.001Z'
+        isAdmin:
+          type: boolean
+          example: true
+    
+    TreePlanted:
+      type: object
+      required:
+        - id
+        - name
+        - date
+        - tree_id
+        - local_id
+        - user_id
+      properties:
+        id:
+          type: number
+          format: uuid
+          example: 1
+        name:
+          type: string
+          example: Abacateiro
+        description:
+          type: string
+          example: Abacateiro 
+        date:
+          type: string
+          format: date
+          example: 2022-09-07
+        tree_id:
+          type: number
+          format: uuid
+          example: 1
+        local_id:
+          type: number
+          format: uuid
+          example: 1
+        user_id: 
+          type: number
+          format: uuid
+          example: 1
