@@ -5,9 +5,10 @@ const UserController = require("../controllers/UserController")
 
 const routes = Router();
 
-routes.post("/user", UserController.createUser);
-routes.get("/user/:id", verifyJWT, UserController.getUser);
-routes.delete("/user/:id", verifyJWT, UserController.removeUser);
-routes.put("/user/:id", verifyJWT, UserController.updateUser);
+routes.post("/users", UserController.createUser);
+routes.get("/users/", verifyJWT, UserController.getAllUsers);
+routes.get("/users/:user_id", verifyJWT, UserController.getUser);
+routes.delete("/users/:user_id", verifyJWT, UserController.removeUser);
+routes.put("/users/:user_id", verifyJWT, UserController.updateUser);
 
 module.exports = routes;
