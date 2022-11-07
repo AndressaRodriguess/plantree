@@ -82,16 +82,17 @@ module.exports ={
   async removeUser(request,response){
     try {
       const id = request.params.user_id;
-      const validade_id = ObjectId.isValid(id);
-      if(!validade_id){
-        res.status(400).json("ID inválido");
+      const validate_id = ObjectId.isValid(id);
+      if(!validate_id){
+        response.status(400).json("ID inválido");
       }
       else{
         const id_current_user = request.user_id;
         const current_user = await UserService.getUserById(id_current_user);
         if(current_user.isAdmin){
           const user_deleted = await UserService.deleteUserById(id);
-          if(user_deleted){
+
+          if(user_deleted.deletedCount){
             response.status(204).json("Usuário excluído com sucesso");
           }
           else{
@@ -103,7 +104,7 @@ module.exports ={
         }
       }
     } catch (error) {
-      return response.status(500).send(error);
+      return response.status(500).json(error);
     }
   }
 }
