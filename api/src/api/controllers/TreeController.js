@@ -21,34 +21,40 @@ module.exports = {
   },
   async get(request, response) {
     try {
-      const id = request.params.Tree_id;
-      const Tree = await Tree.findOne({ where: { id } });
+      const id = request.params.tree_id;
+      const tree = await Tree.findOne({ where: { id } });
 
-      if (!Tree) {
+      if (!tree) {
         return response.status(404).json("Árvore não encontrada");
       }
 
-      response.status(200).json(Tree);
+      response.status(200).json(tree);
     } catch (error) {
       response.status(400).send(error);
     }
   },
   async update(request, response) {
     try {
-      const { name, image, body, user_id } = request.body;
-      const id = request.params.Tree_id;
-      const Tree = await Tree.findOne({ where: { id } });
-
-      if (!Tree) {
+      const { name, family, scientific_name, origin, division, genus, specie, group, description } = request.body;
+      const id = request.params.tree_id;
+      const tree = await Tree.findOne({ where: { id } });
+ 
+      if (!tree) {
         return response.status(404).json("Árvore não encontrada");
       }
 
-      Tree.name = name;
-      Tree.image = image;
-      Tree.body = body;
-      Tree.user_id = user_id;
+      tree.name = name;
+      tree.family = family;
+      tree.scientific_name = scientific_name;
+      tree.origin = origin;
+      tree.division = division;
+      tree.genus = genus;
+      tree.class = request.body.class;
+      tree.specie = specie;
+      tree.group = group;
+      tree.description = description;
 
-      await Tree.save();
+      await tree.save();
       response.status(202).json("Árvore atualizada com sucesso");
     } catch (error) {
       response.status(400).send(error);
@@ -56,10 +62,10 @@ module.exports = {
   },
   async delete(request,response){
     try {
-      const id = request.params.id;
-      const Tree = await Tree.destroy({ where: { id } });
+      const id = request.params.tree_id;
+      const tree = await Tree.destroy({ where: { id } });
 
-      if (!Tree) {
+      if (!tree) {
         return response.status(404).json("Árvore não encontrada");
       }
 

@@ -5,9 +5,9 @@ const PlantationLocalController = require("../controllers/PlantationLocalControl
 
 const routes = Router();
 
-routes.get("/plantation_locations", PlantationLocalController.getAll);
-routes.post("/plantation_locations:", PlantationLocalController.create);
-routes.get("/plantation_locations:/:id", PlantationLocalController.get);
-routes.delete("/plantation_locations:/:id", PlantationLocalController.delete);
+routes.get("/plantation_locations", verifyJWT, PlantationLocalController.getAll);
+routes.post("/plantation_locations", verifyJWT, PlantationLocalController.create);
+routes.get("/plantation_locations/:id", verifyJWT, PlantationLocalController.get);
+routes.delete("/plantation_locations/:id", verifyJWT, PlantationLocalController.delete);
 
 module.exports = routes;

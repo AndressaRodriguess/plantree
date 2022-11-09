@@ -4,7 +4,6 @@ module.exports = {
   async getAll(request, response) {
     try {
       const trees_planted = await TreePlanted.findAll();
-
       response.status(200).json(trees_planted);
     } catch (error) {
       response.status(400).send(error);
@@ -13,7 +12,6 @@ module.exports = {
   async create(request, response) {
     try {
       const tree_planted = await TreePlanted.create(request.body);
-
       response.status(201).json(tree_planted);
     } catch (error) {
       response.status(400).send(error);
@@ -35,7 +33,7 @@ module.exports = {
   },
   async update(request, response) {
     try {
-      const { name, image, body, user_id } = request.body;
+      const { name, description, date, local_id, user_id } = request.body;
       const id = request.params.id;
       const tree = await TreePlanted.findOne({ where: { id } });
 
@@ -43,13 +41,14 @@ module.exports = {
         return response.status(404).json("Árvore plantada não encontrada");
       }
 
-      Tree.name = name;
-      Tree.image = image;
-      Tree.body = body;
-      Tree.user_id = user_id;
+      tree.name = name;
+      tree.description = description;
+      tree.date = date;
+      tree.user_id = user_id;
+      tree.local_id = local_id;
 
-      await TreePlanted.save();
-      response.status(200).json("Árvore atualizada com sucesso");
+      await tree.save();
+      response.status(200).json("Árvore plantada atualizada com sucesso");
     } catch (error) {
       response.status(400).send(error);
     }

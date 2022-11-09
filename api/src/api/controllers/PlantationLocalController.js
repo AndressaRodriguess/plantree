@@ -13,8 +13,7 @@ module.exports = {
   async create(request, response) {
     try {
       const local = await PlantationLocal.create(request.body);
-
-      response.status(201).json(treee_planted);
+      response.status(201).json(local);
     } catch (error) {
       response.status(400).send(error);
     }

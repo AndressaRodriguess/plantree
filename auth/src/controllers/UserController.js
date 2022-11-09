@@ -10,14 +10,21 @@ module.exports ={
     user.createdAt = new Date();
     user.updatedAt = new Date();
 
-    UserService.create(user, (err, result) => {
-      if (err) {
-        res.status(400).send(err);
-      } else {
-        user.password = "*******";
-        res.status(201).json(user);
-      }
-    });
+    const email_exist = await UserService.getByEmail(user.email);
+    if(!email_exist){
+      UserService.create(user, (err, result) => {
+        if (err) {
+          res.status(400).send(err);
+        } else {
+          user.password = "*******";
+          res.status(201).json(user);
+        }
+      });
+    }
+    else
+    {
+      res.status(409).json("Cadastro não foi realizado pois e-mail já está em uso.");
+    }
   },
   async getUser(req, res){
     const id = req.params.user_id;
