@@ -1,5 +1,5 @@
 const app = require("./app.js");
-const sequelize = require("./src/api/repositories/database/database");
+const sequelize = require("./api/repositories/database/database");
 require("dotenv").config();
 
 sequelize.sync();
