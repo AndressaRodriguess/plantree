@@ -8,6 +8,10 @@ TreePlanted.init({
     type: DataTypes.STRING,
     allowNull: false
   },
+  description: {
+    type: DataTypes.TEXT,
+    allowNull: true
+  },
   date: {
     type: DataTypes.DATE,
     allowNull: false

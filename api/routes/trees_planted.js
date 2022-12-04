@@ -25,7 +25,11 @@ trees_planted.get("/trees_planted/:id", verifyJWT, async function (req, res) {
 
 trees_planted.post("/trees_planted", verifyJWT, async function (req, res) {
     try {
-        const tree_planted = await TreePlanted.create(req.body);
+        const tree = {
+            ...req.body,
+            user_id: req.user_id
+        }
+        const tree_planted = await TreePlanted.create(tree);
         res.status(201).json(tree_planted);
     } catch (error) {
         res.status(400).send(error);

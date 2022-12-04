@@ -2,7 +2,7 @@ const auth = require("express").Router();
 const User = require("../api/repositories/database/model/User");
 const utils = require("../api/utils/utils");
 
-auth.get("/auth/login", async function (req, res) {
+auth.post("/auth/login", async function (req, res) {
     try{
         if (req.body.hasOwnProperty('email') && req.body.hasOwnProperty('password')  ) {
             const userLogin = await User.findOne({ where: { email: req.body.email } });
