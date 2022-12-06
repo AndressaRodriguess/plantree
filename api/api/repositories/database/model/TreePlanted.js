@@ -13,15 +13,15 @@ TreePlanted.init({
     allowNull: true
   },
   date: {
-    type: DataTypes.DATE,
+    type: DataTypes.DATEONLY,
     allowNull: false
   },
-  tree_id: {
-    type: DataTypes.INTEGER,
+  tree: {
+    type: DataTypes.STRING,
     allowNull: false
   },
-  local_id: {
-    type: DataTypes.INTEGER,
+  local: {
+    type: DataTypes.STRING,
     allowNull: false
   },
   user_id: {

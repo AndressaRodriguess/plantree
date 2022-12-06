@@ -38,18 +38,19 @@ trees_planted.post("/trees_planted", verifyJWT, async function (req, res) {
 
 trees_planted.put("/trees_planted/:id", verifyJWT, async function (req, res) {
     try {
-        const { name, description, date, local_id } = req.body;
+        const { name, description, date, local, tree } = req.body;
         const id = req.params.id;
-        const tree = await TreePlanted.findOne({ where: { id } });
-        if (!tree) {
+        const tree_planted = await TreePlanted.findOne({ where: { id } });
+        if (!tree_planted) {
           return res.status(404).json("Árvore plantada não encontrada");
         }
-        tree.name = name;
-        tree.description = description;
-        tree.date = date;
-        tree.user_id = req.user_id;
-        tree.local_id = local_id;
-        await tree.save();
+        tree_planted.name = name;
+        tree_planted.description = description;
+        tree_planted.date = date;
+        tree_planted.user_id = req.user_id;
+        tree_planted.local = local;
+        tree_planted.tree = tree;
+        await tree_planted.save();
         res.status(200).json("Árvore plantada atualizada com sucesso");
     } catch (error) {
         res.status(400).send(error);
