@@ -20,7 +20,7 @@ describe("Testes para o path 'trees'", () => {
 
     test("[GET /plantation_locations/{id}] Recupera um item de local de plantação por id", async () => {
         const res = await request(app)
-            .get("/plantation_locations/3")
+            .get("/plantation_locations/1")
             .set('Authorization', `Bearer ${TOKEN}`)
             .set('Accept', 'application/json');
 
@@ -34,9 +34,10 @@ describe("Testes para o path 'trees'", () => {
 
     test("[POST /plantation_locations] Criação de um novo item de local de plantio de árvore", async () => {
         const res = await request(app)
-                            .post("/plantation_locations",{
+                            .post("/plantation_locations")
+                            .send({
                                 "name": "Praça pública",
-                                "user_id": 1
+                                "user_id": "1"
                               })
                             .set('Authorization', `Bearer ${TOKEN}`)
                             .set("Content-Type", "application/json")
@@ -48,7 +49,7 @@ describe("Testes para o path 'trees'", () => {
 
     test("[DELETE /plantation_locations/{id_arvore}] Remove um item de local de plantação por id", async () => {
         const res = await request(app)
-            .delete("/plantation_locations/4")
+            .delete("/plantation_locations/1")
             .set('Authorization', `Bearer ${TOKEN}`)
             .set('Accept', 'application/json');
 

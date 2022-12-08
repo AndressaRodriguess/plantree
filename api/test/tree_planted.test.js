@@ -23,7 +23,7 @@ describe("Testes para o path 'trees_planted'", () => {
 
     test("[GET /trees_planted/{id}] Recupera um item de árvore plantada por id", async () => {
         const res = await request(app)
-            .get("/trees_planted/2")
+            .get("/trees_planted/1")
             .set('Authorization', `Bearer ${TOKEN}`)
             .set('Accept', 'application/json');
 
@@ -40,12 +40,13 @@ describe("Testes para o path 'trees_planted'", () => {
 
     test("[POST /trees_planted] Cadastro de plantio de árvore", async () => {
         const res = await request(app)
-                            .post("/trees_planted", {
+                            .post("/trees_planted")
+                            .send({
                                     "name": "Abacateiro",
                                     "date": "2022-09-07",
-                                    "tree_id": 1,
-                                    "local_id": 1,
-                                    "user_id": 1
+                                    "tree_id": "1",
+                                    "local_id": "1",
+                                    "user_id": "1"
                                 })
                             .set('Authorization', `Bearer ${TOKEN}`)
                             .set("Content-Type", "application/json")
@@ -57,7 +58,7 @@ describe("Testes para o path 'trees_planted'", () => {
 
     test("[DELETE /trees_planted/{id_arvore}] Remove um item de árvore plantada por id", async () => {
         const res = await request(app)
-            .delete("/trees_planted/4")
+            .delete("/trees_planted/1")
             .set('Authorization', `Bearer ${TOKEN}`)
             .set('Accept', 'application/json');
 

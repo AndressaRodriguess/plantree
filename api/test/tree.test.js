@@ -29,7 +29,7 @@ describe("Testes para o path 'trees'", () => {
 
     test("[GET /trees/{id}] Recupera um item de árvore por id", async () => {
         const res = await request(app)
-            .get("/trees/4")
+            .get("/trees/1")
             .set('Authorization', `Bearer ${TOKEN}`)
             .set('Accept', 'application/json');
 
@@ -52,7 +52,8 @@ describe("Testes para o path 'trees'", () => {
 
     test("[POST /trees] Criação de um novo item de árvore", async () => {
         const res = await request(app)
-                            .post("/trees", {
+                            .post("/trees")
+                            .send({
                                 "name": "Abacateiro Tipo 1",
                                 "family": "Lauraceae",
                                 "scientific_name": "Persea americana",
@@ -73,7 +74,7 @@ describe("Testes para o path 'trees'", () => {
 
     test("[DELETE /trees/{id_arvore}] Remove um item de árvore por id", async () => {
         const res = await request(app)
-            .delete("/trees/5")
+            .delete("/trees/1")
             .set('Authorization', `Bearer ${TOKEN}`)
             .set('Accept', 'application/json');
 
