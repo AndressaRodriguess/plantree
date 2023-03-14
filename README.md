@@ -1,18 +1,6 @@
 # PlanTree
-Sistema web que tem como intuito primário e principal o controle pessoal do plantio de árvores. Será responsável por cadastrar e exibir novas árvores cadastras pelos úsuario.
+Sistema web que tem como intuito o controle pessoal do plantio de árvores. Será responsável por cadastrar e exibir novas árvores cadastradas pelos úsuarios.
 
-INTEGRANTES DO GRUPO:
-Andressa Rodrigues 
-Filipe Feliconio 
-Gabriel Lima 
-Jonathan Paoroso 
-Saulo Rodrigues Martins
-Vitor Kazuya
-
-API/Back:
-- Node
-- Express
-
-Front:
-- ReactJS
-
+Backend divide-se em dois módulos
+- API REST
+- módulo de autenticação e controle de usuários
